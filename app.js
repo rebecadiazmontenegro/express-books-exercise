@@ -11,7 +11,7 @@ app.use(express.json());
 
 // 1. Crea una ruta /all para obtener todos los libro
 
-    app.get("/books", (req, res) => {
+    app.get("/all", (req, res) => {
     res.json(books); 
     });
     console.log("Número de libros cargados:", books.length); // Para asegurarme de que me estan cargando todos los libros
@@ -43,10 +43,10 @@ app.use(express.json());
 
 // 5. Crea una ruta /author/dante-alighieri para obtener SÓLO EL TÍTULO del libro de Dante Alighieri
 
-    app.get("/author/dante-alighieridle", (req, res) => {
+    app.get("/author/dante-alighieri", (req, res) => {
     const bookDante = books.find(b => b.author.toLowerCase() === "dante alighieri");
     if(bookDante) {
-        res.json(bookDante);
+        res.json(bookDante.title);
     } else {
         res.status(404).json({ message: "Libro no encontrado" });
     }
@@ -68,7 +68,7 @@ app.use(express.json());
    app.get("/year&pages/cervantes", (req, res) => {
     const bookMiguel = books.find(b => b.author.toLowerCase() === "miguel de cervantes");
     if(bookMiguel) {
-        res.json(`pages: ${bookMiguel.pages}, year: ${bookMiguel.year}`);
+       res.json({ pages: bookMiguel.pages, year: bookMiguel.year });
     } else {
         res.status(404).json({ message: "Libro no encontrado" });
     }
@@ -79,7 +79,7 @@ app.use(express.json());
    app.get("/country/count/spain", (req, res) => {
     const booksSpain = books.filter(b => b.country.toLowerCase() === "spain");
     if(booksSpain) {
-        res.json(`Número de libros de España: ${booksSpain.length}`);
+       res.json(booksSpain.length);
     } else {
         res.status(404).json({ message: "Libro no encontrado" });
     }
